@@ -29,6 +29,8 @@ matrix:
     - env: INTEGRATION_TEST=true
     - rvm: 2.3.7
       gemfile: gemfiles/action_mailer_edge.gemfile
+    - rvm: 2.4.4
+      gemfile: gemfiles/action_mailer_edge.gemfile
     - rvm: 2.5.1
       gemfile: gemfiles/action_mailer_50.gemfile
     - rvm: ruby-head
