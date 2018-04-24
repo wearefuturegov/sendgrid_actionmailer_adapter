@@ -33,7 +33,7 @@ Or install it yourself as:
 
 ## Usage
 
-First, in your `config/application.rb` or `config/environments/*.rb`, 
+First, in your `config/application.rb` or `config/environments/*.rb`,
 set `SendgridActionMailerAdapter::DeliveryMethod` to `config.action_mailer.delivery_method`.
 
 ```ruby
@@ -58,6 +58,7 @@ SendGridActionMailerAdapter.configure do |config|
   config.host = 'host'
   config.request_headers = { key: 'val' }
   config.version = 'v3'
+  config.asm = ::SendGrid::ASM.new(group_id: 99, groups_to_display: [4, 5, 6, 7, 8])
   
   # optional(Retry)
   config.retry_max_count = 3
@@ -65,7 +66,7 @@ SendGridActionMailerAdapter.configure do |config|
 end
 ```
 
-Then, you can send emails from ActionMailer class. 
+Then, you can send emails from ActionMailer class.
 
 ```ruby
 class TestMailer < ApplicationMailer
@@ -79,7 +80,7 @@ end
 
 class TestMailsController < ApplicationController
   def create
-    TestMailer.test_mail.deliver_now 
+    TestMailer.test_mail.deliver_now
   end
 end
 ```
@@ -102,7 +103,7 @@ class TestMailer < ApplicationMailer
 end
 ```
 
-#### send_at 
+#### send_at
 
 You can set 'send_at' parameter for scheduled emails.
 
@@ -132,6 +133,7 @@ end
 * attachments
 * categories
 * send_at
+* asm
 
 ##### Unsupported
 
@@ -146,7 +148,6 @@ end
 * headers
 * custom_args
 * batch_id
-* asm
 * in_pool_name
 * mail_settings
 * tracking_settings
@@ -167,7 +168,7 @@ push git commits and tags, and push the `.gem` file to [rubygems.org](https://ru
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/ryu39/sendgrid_actionmailer_adapter.
-This project is intended to be a safe, welcoming space for collaboration, 
+This project is intended to be a safe, welcoming space for collaboration,
 and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
