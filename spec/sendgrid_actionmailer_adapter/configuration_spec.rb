@@ -20,6 +20,7 @@ RSpec.describe SendGridActionMailerAdapter::Configuration do
       config.retry_max_count = retry_max_count
       config.retry_wait_seconds = retry_wait_seconds
       config.return_response = return_response
+      config.asm = ::SendGrid::ASM.new(group_id: 99, groups_to_display: [4, 5, 6, 7, 8])
     end
   end
 
@@ -47,5 +48,23 @@ RSpec.describe SendGridActionMailerAdapter::Configuration do
     end
 
     it { is_expected.to eq(expected) }
+  end
+
+  describe '.asm' do
+    subject { SendGridActionMailerAdapter::Configuration.asm }
+
+    let(:expected) do
+      ::SendGrid::ASM.new(group_id: 99, groups_to_display: [4, 5, 6, 7, 8])
+    end
+
+    it { is_expected.to be_a(::SendGrid::ASM) }
+
+    it 'sets the right group id' do
+      expect(expected.group_id).to eq(99)
+    end
+
+    it 'sets the right groups to display' do
+      expect(expected.groups_to_display).to eq([4, 5, 6, 7, 8])
+    end
   end
 end
