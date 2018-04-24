@@ -94,5 +94,18 @@ RSpec.describe SendGridActionMailerAdapter::Converter do
     it 'sets send_at to SendGrid::Mail' do
       expect(subject.send_at).to eq(send_at)
     end
+
+    context 'with asm set' do
+      before do
+        SendGridActionMailerAdapter.configure do |config|
+          config.asm = ::SendGrid::ASM.new(group_id: 99, groups_to_display: [4, 5, 6, 7, 8])
+        end
+      end
+
+      it 'sets the unsubscribe group' do
+        expect(subject.asm['group_id']).to eq(99)
+        expect(subject.asm['groups_to_display']).to eq([4, 5, 6, 7, 8])
+      end
+    end
   end
 end

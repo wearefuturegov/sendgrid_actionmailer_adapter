@@ -51,6 +51,11 @@ module SendGridActionMailerAdapter
           result = converter.convert(mail)
           converter.assign_attributes(sendgrid_mail, result)
         end
+        append_asm(sendgrid_mail)
+      end
+
+      def append_asm(sendgrid_mail)
+        sendgrid_mail.asm = ::SendGridActionMailerAdapter::Configuration.asm
         sendgrid_mail
       end
     end
