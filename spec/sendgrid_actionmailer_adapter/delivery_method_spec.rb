@@ -99,5 +99,23 @@ RSpec.describe SendGridActionMailerAdapter::DeliveryMethod do
 
       it_behaves_like 'retryable'
     end
+
+    context 'with asm set' do
+      before do
+        SendGridActionMailerAdapter.configure do |config|
+          config.asm = ::SendGrid::ASM.new(group_id: 99, groups_to_display: [4, 5, 6, 7, 8])
+        end
+      end
+
+      let(:request_body) do
+        ::SendGridActionMailerAdapter::Converter.to_sendgrid_mail(mail).to_json
+      end
+
+      it 'sends the unsubscribe group' do
+        stub = stub_request(:post, 'https://api.sendgrid.com/v3/mail/send').with(body: request_body)
+        expect { subject }.not_to raise_error
+        expect(stub).to have_been_requested
+      end
+    end
   end
 end
